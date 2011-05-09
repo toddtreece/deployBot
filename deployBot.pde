@@ -15,7 +15,7 @@ int port = 6667;
 
 unsigned long lastmillis = 0;
 
-String channel = "#it";
+String channel = "#test";
 String nickname = "deployBot";
 String hal = "HALbot";
 String default_action = "alerts meatbags";
@@ -39,13 +39,13 @@ void setup() {
 
 void loop() {
   mp3.begin(38400);
-  check_dhcp();
+  //check_dhcp();
   if(client.available()) {
     String data;
     data = "";
     while(true) {
       char c = client.read();
-      Serial.print(c);
+      //Serial.print(c);
       if (c == '\n'){ break; }
       data.concat(c);
     }
@@ -89,8 +89,7 @@ void connect() {
     client.println();
     client.print("JOIN ");
     client.println(channel);
-    client.print("JOIN ");
-    client.println("#sparkfun");
+
   } else {
     Serial.println("Connection Failed");
   }
