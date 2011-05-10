@@ -15,7 +15,7 @@ int port = 6667;
 
 unsigned long lastmillis = 0;
 
-char *channel = "#test";
+char *channel = "#it";
 char *nickname = "deployBot";
 char *hal = "HALbot";
 char *default_action = "alerts meatbags";
@@ -89,7 +89,8 @@ void connect() {
     client.println();
     client.print("JOIN ");
     client.println(channel);
-
+    client.print("JOIN ");
+    client.println("#sparkfun");
   } else {
     Serial.println("Connection Failed");
   }
