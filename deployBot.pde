@@ -15,14 +15,14 @@ int port = 6667;
 
 unsigned long lastmillis = 0;
 
-String channel = "#test";
-String nickname = "deployBot";
-String hal = "HALbot";
-String default_action = "alerts meatbags";
-String default_message = "robacarp, stilldavid, mike, ross, randy, erik, brennen, ben, caseyd, todd, christoph: ready for deploy?";
-String dammit_rob = "http://dammitrob.com";
-String hal_action = "looks at stilldavid";
-String hal_reply = "I'm sorry, Dave. I'm afraid I can't do that.";
+char *channel = "#test";
+char *nickname = "deployBot";
+char *hal = "HALbot";
+char *default_action = "alerts meatbags";
+char *default_message = "robacarp, stilldavid, mike, ross, randy, erik, brennen, ben, caseyd, todd, christoph: ready for deploy?";
+char *dammit_rob = "http://dammitrob.com";
+char *hal_action = "looks at stilldavid";
+char *hal_reply = "I'm sorry, Dave. I'm afraid I can't do that.";
 
 Client client(server, port);
 NewSoftSerial mp3 = NewSoftSerial(rx_pin, tx_pin);
@@ -132,7 +132,7 @@ void deploy(boolean alert) {
   if(alert == true) {
     send_action(default_action);
     send_message(default_message);
-    send_haiku(random(1,4), "#sparkfun");
+    send_haiku(random(1,4));
   }
   
   delay(1000);
@@ -141,7 +141,7 @@ void deploy(boolean alert) {
 
 void deployed(boolean alert) {
   if(alert == true) {
-    send_haiku(random(4,6), "#sparkfun");
+    send_haiku(random(4,6));
   }
   mp3.println("O");
   digitalWrite(relay_pin, LOW);
@@ -152,44 +152,44 @@ void send_pong(String &response) {
   client.println(response.substring(6));
 }
 
-void send_haiku(long number, String chan) {
+void send_haiku(long number) {
   switch(number) {
     case 1:
-      send_notice("it's time to deploy", chan);
-      send_notice("if that does not work for you", chan);
-      send_notice("let IT know soon!", chan);
+      send_notice("it's time to deploy");
+      send_notice("if that does not work for you");
+      send_notice("let IT know soon!");
       break;
     case 2:
-      send_notice("when software goes live", chan);
-      send_notice("sometimes it causes problems", chan);
-      send_notice("be wise, cross fingers", chan);
+      send_notice("when software goes live");
+      send_notice("sometimes it causes problems");
+      send_notice("be wise, cross fingers");
       break;
     case 3:
-      send_notice("hold on to your butts", chan);
-      send_notice("there are many lines of code", chan);
-      send_notice("about two million", chan);
+      send_notice("hold on to your butts");
+      send_notice("there are many lines of code");
+      send_notice("about two million");
       break;
     case 4:
-      send_notice("the code has been pushed", chan);
-      send_notice("we hope you like new features", chan);
-      send_notice("cause damn there's a ton", chan);
+      send_notice("the code has been pushed");
+      send_notice("we hope you like new features");
+      send_notice("cause damn there's a ton");
       break;
     case 5:
-      send_notice("i hope you weren't scared", chan);
-      send_notice("everything went really well", chan);
-      send_notice("you can work again", chan);
+      send_notice("i hope you weren't scared");
+      send_notice("everything went really well");
+      send_notice("you can work again");
       break;
   }
 }
 
-void send_notice(String notice, String chan) {
+void send_notice(char *notice) {
   client.print("NOTICE ");
-  client.print(chan);
+  client.print("#sparkfun");
   client.print(" :");
   client.println(notice);
 }
 
-void send_action(String &action) {
+void send_action(char *action) {
   client.print("PRIVMSG ");
   client.print(channel);
   client.print(" :");
@@ -199,7 +199,7 @@ void send_action(String &action) {
   client.println(1,BYTE);
 }
 
-void send_message(String &message) {
+void send_message(char *message) {
   client.print("PRIVMSG ");
   client.print(channel);
   client.print(" :");
